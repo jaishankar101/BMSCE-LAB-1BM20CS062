@@ -1,0 +1,113 @@
+create database proctor_student_62;
+use proctor_student_62;
+
+create table faculty(faculty_id varchar(10),
+fname varchar(30),
+fmob int,
+hod  varchar(10),
+primary key(faculty_id),
+foreign key(faculty_id) references faculty(faculty_id));
+
+
+create table student(
+usn varchar(10),
+name varchar(30),
+mobile_no int,
+email varchar(30),
+department varchar(30),
+parent_name varchar(30),
+parent_mobile int,
+address varchar(50),
+faculty_id varchar(10), 
+primary key(usn),
+foreign key(faculty_id) references faculty(faculty_id));
+insert into faculty values (1,'f1',1234);
+insert into faculty values (2,'f2',5678);
+insert into faculty values (3,'f3',3456);
+
+insert into student values ('1bmcs100','std1',6378252344,'abc1@gmail.com','cs','pabc1',1234534567,'delhi','1');
+insert into student values ('1bmcs200','std2',5736123454,'abc2@gmail.com','cs','pabc2',5736135356,'mumbai','2');
+insert into student values ('1bmis300','std3',9616789548,'abc3@gmail.com','is','pabc3',9618132245,'hyderabad','3');
+
+insert into course_details values('c11','dbms',3,'201');
+insert into course_details values('c21','tfcs',4,'202');
+insert into course_details values('c31','ds',5,'203');
+
+insert into leave_record values('201','157','2022-02-13','2022-02-18','r1','2022-02-23','1bmcs100');
+insert into leave_record values('202','158','2022-02-14','2022-02-19','r2','2022-02-24','1bmcs200');
+insert into leave_record values('203','159','2022-02-15','2022-02-19','r3','2022-02-24','1bmis300');
+
+insert into student_activity values(175,'1bmcs100','2022-07-08','c1','2022-07-10','201');
+insert into student_activity values(176,'1bmcs200','2022-07-09','c1','2022-07-11','202');
+insert into student_activity values(177,'1bmis300','2022-07-08','c3','2022-07-10','203');
+
+insert into student_course_activity values('1bmcs100','c11','s','10','10','94','96','95');
+insert into student_course_activity values('1bmcs200','c21','s','10','10','95','96','94');
+insert into student_course_activity values('1bmis300','c31','s','10','10','94','96','95');
+
+insert into course_activity values('c11','201');
+insert into course_activity values('c21','202');
+insert into course_activity values('c31','203');
+
+ insert into meetings values(57,'201','2022-08-15','p1','oc1','students');
+ insert into meetings values(58,'202','2022-08-16','p2','oc2','parents');
+ insert into meetings values(59,'203','2022-08-17','p3','oc3','parents');
+
+
+create table course_details(course_code varchar(10),
+course_name varchar(30),
+credits int,
+primary key(course_code),
+);
+
+create table student_course_details(
+usn varchar(10),
+course_code varchar(10),
+CIE_Marks int, 
+SEE_Marks int,
+attendance varchar(5),
+grade varchar(3),
+CGPA varchar(5),
+SGPA varchar(5),
+primary key(usn,course_code),
+foreign key(usn) references student(usn),
+foreign key(course_code) references course_details(course_code));
+
+create table meetings(sl_no int,
+faculty_id varchar(10),
+meet_date date,
+purpose varchar(20),
+outcome varchar(20),
+meeting_with varchar(20),
+primary key(sl_no),
+foreign key(faculty_id)references faculty(faculty_id));
+
+create table leave_record(sl_no int NOT NULL AUTO_INCREMENT,
+faculty_id varchar(10),
+usn varchar(10),
+reason varchar(50),
+start_date date,
+end_date date,
+primary key(sl_no),
+foreign key(faculty_id) references faculty(faculty_id),
+foreign key(usn) references student(usn));
+
+create table student_activity(sl_no int NOT NULL AUTO_INCREMENT,
+faculty_id varchar(10),
+usn varchar(10),
+company varchar(30),
+start_date date,
+end_date date,
+primary key(sl_no),
+foreign key(usn) references student(usn), 
+foreign key(faculty_id) references faculty(faculty_id));
+
+-- create table course_activity(course_code varchar(10),
+-- faculty_id varchar(10),
+-- primary key(course_code,faculty_id),
+-- foreign key(course_code) references course_details(course_code),
+-- foreign key(faculty_id) references faculty(faculty_id));
+
+
+ 
+ select *from leave_record;
